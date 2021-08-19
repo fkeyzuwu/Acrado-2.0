@@ -5,15 +5,36 @@ using Mirror;
 
 public class GameManager : NetworkBehaviour
 {
+    private int playersReady = 0;
+
     [SyncVar(hook = nameof(UpdateClientTurn))]
     private GameState gameState = GameState.Setup;
 
     [SyncVar] private int player1Mana = 0;
     [SyncVar] private int player2Mana = 0;
 
-    public void StartGame()
+    [Command]
+    public void CmdIsPlayerReady(bool isReady)
+    {
+        if (isReady)
+        {
+            playersReady++;
+        }
+        else
+        {
+            playersReady--;
+        }
+
+        if(playersReady == 2)
+        {
+            StartGame();
+        }
+    }
+
+    private void StartGame()
     {
         gameState = GameState.Player1Turn;
+        Debug.Log("Game Started!");
     }
 
     public void NextTurn()
