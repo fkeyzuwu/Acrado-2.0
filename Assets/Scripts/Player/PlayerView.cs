@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
+using UnityEngine.UI;
 
-public class PlayerView : MonoBehaviour
+public class PlayerView : NetworkBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private GameManager gameManager;
 
-    // Update is called once per frame
-    void Update()
+    public GameManager GameManager
     {
-        
+        get
+        {
+            if(gameManager == null)
+            {
+                gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            }
+
+            return gameManager;
+        }
     }
 }

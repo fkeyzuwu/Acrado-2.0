@@ -7,9 +7,9 @@ public class AcradoNetworkManager : NetworkManager
 {
     [SerializeField] private GameObject gameManagerPrefab;
     [HideInInspector] public GameManager GameManager;
-    public override void OnStartServer()
+    public override void OnStartClient()
     {
-        base.OnStartServer();
+        base.OnStartClient();
         GameObject gameManagerObject = Instantiate(gameManagerPrefab);
         GameManager GameManager = gameManagerObject.GetComponent<GameManager>();
     }

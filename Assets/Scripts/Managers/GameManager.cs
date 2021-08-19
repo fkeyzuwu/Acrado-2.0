@@ -5,6 +5,8 @@ using Mirror;
 
 public class GameManager : NetworkBehaviour
 {
+    [SerializeField] private GameObject endTurnButton;
+
     private int playersReady = 0;
 
     [SyncVar(hook = nameof(UpdateClientTurn))]
@@ -13,7 +15,7 @@ public class GameManager : NetworkBehaviour
     [SyncVar] private int player1Mana = 0;
     [SyncVar] private int player2Mana = 0;
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdIsPlayerReady(bool isReady)
     {
         if (isReady)
@@ -31,13 +33,17 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    [Server]
     private void StartGame()
     {
+        NetworkServer.UnSpawn(GameObject.Find("ReadyButton"));
+        NetworkServer.Spawn(endTurnButton, connectionToClient);
         gameState = GameState.Player1Turn;
         Debug.Log("Game Started!");
     }
 
-    public void NextTurn()
+    [Command(requiresAuthority = false)]
+    public void CmdEndTurn()
     {
         if(gameState == GameState.Player1Turn)
         {
@@ -49,11 +55,12 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    public void UpdateClientTurn(GameState oldGameState, GameState newGameState)
+    [Server]
+    private void UpdateClientTurn(GameState oldGameState, GameState newGameState)
     {
-        if(newGameState == GameState.Player2Turn)
+        if (newGameState == GameState.Player2Turn)
         {
-            if(player2Mana < 10)
+            if (player2Mana < 10)
             {
                 player2Mana++;
             }

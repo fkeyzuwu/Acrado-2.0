@@ -7,17 +7,14 @@ using Mirror;
 
 public class ReadyButton : NetworkBehaviour
 {
-    private GameManager gameManager;
-
+    private GameManager GameManager;
     public void OnClick(bool isOn)
     {
-        Debug.Log(isOn);
-
-        if (gameManager == null)
+        if(GameManager == null)
         {
-            Debug.Log(connectionToServer);
-            gameManager = connectionToServer.identity.GetComponent<AcradoNetworkManager>().GameManager;
+            GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
-        gameManager.CmdIsPlayerReady(isOn);
+
+        GameManager.CmdIsPlayerReady(isOn);
     }
 }
