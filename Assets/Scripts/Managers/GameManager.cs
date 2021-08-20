@@ -2,18 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.UI;
 
 public class GameManager : NetworkBehaviour
 {
-    [SerializeField] private GameObject endTurnButton;
+    private Button endTurnButton;
 
-    private int playersReady = 0;
+    [SerializeField] private int playersReady = 0;
 
     [SyncVar(hook = nameof(UpdateClientTurn))]
-    private GameState gameState = GameState.Setup;
+    public GameState gameState = GameState.Setup;
 
-    [SyncVar] private int player1Mana = 0;
-    [SyncVar] private int player2Mana = 0;
+    [SyncVar] public int player1ID = 1;
+    [SyncVar] public int player2ID = 2;
+
+    [SyncVar] public int player1Mana = 0;
+    [SyncVar] public int player2Mana = 0;
+    [SyncVar] public int whosTurn = 0;
 
     [Command(requiresAuthority = false)]
     public void CmdIsPlayerReady(bool isReady)
@@ -37,9 +42,15 @@ public class GameManager : NetworkBehaviour
     private void StartGame()
     {
         NetworkServer.UnSpawn(GameObject.Find("ReadyButton"));
-        NetworkServer.Spawn(endTurnButton, connectionToClient);
-        gameState = GameState.Player1Turn;
+
+        RpcUnlockButtons();
+
+        whosTurn = Random.Range(1, 2);
+        gameState = whosTurn == 1 ? GameState.Player1Turn : GameState.Player2Turn;
+
         Debug.Log("Game Started!");
+
+        UpdateMana();
     }
 
     [Command(requiresAuthority = false)]
@@ -53,24 +64,40 @@ public class GameManager : NetworkBehaviour
         {
             gameState = GameState.Player1Turn;
         }
+
+        UpdateMana();
     }
 
     [Server]
-    private void UpdateClientTurn(GameState oldGameState, GameState newGameState)
+    private void UpdateMana()
     {
-        if (newGameState == GameState.Player2Turn)
-        {
-            if (player2Mana < 10)
-            {
-                player2Mana++;
-            }
-        }
-        else
+        if (gameState == GameState.Player1Turn)
         {
             if (player1Mana < 10)
             {
                 player1Mana++;
             }
         }
+        else
+        {
+            if (player2Mana < 10)
+            {
+                player2Mana++;
+            }
+        }
+    }
+
+    private void UpdateClientTurn(GameState _, GameState newGameState)
+    {
+        PlayerView player = NetworkClient.connection.identity.GetComponent<PlayerView>();
+        player.IsMyTurn = player.MyGameState == gameState;
+        endTurnButton.interactable = player.IsMyTurn;
+    }
+
+    [ClientRpc]
+    private void RpcUnlockButtons()
+    {
+        GameObject buttonObject = GameObject.Find("EndTurnButton");
+        endTurnButton = buttonObject.GetComponent<Button>();
     }
 }

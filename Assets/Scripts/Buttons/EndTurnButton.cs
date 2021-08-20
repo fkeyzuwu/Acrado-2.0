@@ -19,6 +19,5 @@ public class EndTurnButton : NetworkBehaviour
     public void OnClick()
     {
         gameManager.CmdEndTurn();
-        button.interactable = false;
     }
 }

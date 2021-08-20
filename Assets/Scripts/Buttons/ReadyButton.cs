@@ -7,14 +7,15 @@ using Mirror;
 
 public class ReadyButton : NetworkBehaviour
 {
-    private GameManager GameManager;
+    private PlayerView player;
     public void OnClick(bool isOn)
     {
-        if(GameManager == null)
+        if(player == null)
         {
-            GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            player = NetworkClient.connection.identity.GetComponent<PlayerView>();
         }
 
-        GameManager.CmdIsPlayerReady(isOn);
+        player.ReadySate(isOn);
     }
+
 }
