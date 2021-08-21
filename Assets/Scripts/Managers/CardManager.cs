@@ -6,5 +6,45 @@ using Mirror;
 
 public class CardManager : NetworkBehaviour
 {
+    private GameManager gameManager;
 
+    private Transform playerHand;
+    private Transform playerBoard;
+
+    private Transform enemyHand;
+    private Transform enemyBoard;
+
+
+    [SerializeField] GameObject cardPrefab;
+
+    protected virtual void Start()
+    {
+        playerHand = GameObject.Find("PlayerHand").transform;
+        playerBoard = GameObject.Find("PlayerBoard").transform;
+        enemyHand = GameObject.Find("EnemyHand").transform;
+        enemyBoard = GameObject.Find("EnemyBoard").transform;
+    }
+
+    [Command]
+    public void CmdDrawCards(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            GameObject cardObject = Instantiate(cardPrefab, playerHand);
+            NetworkServer.Spawn(cardObject, connectionToClient);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcShowCards(GameObject cardObject, string cardName, CardState cardState)
+    {
+        
+    }
+
+    [Server]
+    private Deck GetDeck(int playerID)
+    {
+        Deck deck = new Deck();
+        return deck;
+    }
 }

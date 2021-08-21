@@ -35,7 +35,7 @@ public class PlayerView : NetworkBehaviour
         GameManager.CmdIsPlayerReady(isReady);
     }
 
-    public void Test()
+    public void PlayCard()
     {
         if (IsMyTurn)
         {

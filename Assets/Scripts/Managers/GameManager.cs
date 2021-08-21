@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : NetworkBehaviour
 {
+    private CardManager cardManager;
+
     private Button endTurnButton;
 
     [SerializeField] private int playersReady = 0;
@@ -66,6 +69,7 @@ public class GameManager : NetworkBehaviour
         }
 
         UpdateMana();
+        
     }
 
     [Server]
@@ -92,6 +96,7 @@ public class GameManager : NetworkBehaviour
         PlayerView player = NetworkClient.connection.identity.GetComponent<PlayerView>();
         player.IsMyTurn = player.MyGameState == gameState;
         endTurnButton.interactable = player.IsMyTurn;
+        endTurnButton.GetComponent<TextMeshProUGUI>().text = player.IsMyTurn ? "End Turn" : "Enemy Turn";
     }
 
     [ClientRpc]
