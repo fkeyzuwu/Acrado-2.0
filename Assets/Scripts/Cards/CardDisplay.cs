@@ -10,22 +10,22 @@ public class CardDisplay : NetworkBehaviour
     private string path = "ScriptableCards/";
 
     [SerializeField] private Card card;
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI manaCostText;
     [SerializeField] private TextMeshProUGUI attackText;
     [SerializeField] private TextMeshProUGUI healthText;
 
-    public void LoadCard(string cardName)
+    public void InitializeCard(string cardName)
     {
+        if (card != null)
+        {
+            Debug.Log("Card already intialized");
+            return;
+        }
+        
         card = Resources.Load<Card>(path + cardName);
-        InitializeCard();
-    }
 
-    public void InitializeCard()
-    {
-        if(card == null)
+        if (card == null)
         {
             Debug.LogError("Can't initiallize prefab when card is null");
             return;
@@ -33,8 +33,7 @@ public class CardDisplay : NetworkBehaviour
 
         if (hasAuthority)
         {
-            nameText.text = card.name;
-            descriptionText.text = card.description;
+            gameObject.name = card.name;
             image.sprite = card.sprite;
             manaCostText.text = card.manaCost.ToString();
             attackText.text = card.attack.ToString();

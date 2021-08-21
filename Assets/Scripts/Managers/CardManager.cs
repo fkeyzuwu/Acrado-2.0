@@ -32,13 +32,26 @@ public class CardManager : NetworkBehaviour
         {
             GameObject cardObject = Instantiate(cardPrefab, playerHand);
             NetworkServer.Spawn(cardObject, connectionToClient);
+            RpcShowCard(cardObject, "get this from deck", CardState.Hand);
         }
     }
 
     [ClientRpc]
-    public void RpcShowCards(GameObject cardObject, string cardName, CardState cardState)
+    public void RpcShowCard(GameObject cardObject, string cardName, CardState cardState)
     {
-        
+        if (hasAuthority)
+        {
+            cardObject.GetComponent<CardDisplay>().InitializeCard(cardName);
+        }
+        else if (cardState == CardState.Board)
+        {
+            cardObject.GetComponent<CardFlipper>().Flip();
+            cardObject.GetComponent<CardDisplay>().InitializeCard(cardName);
+        }
+        else
+        {
+            cardObject.GetComponent<CardFlipper>().Flip();
+        }
     }
 
     [Server]
