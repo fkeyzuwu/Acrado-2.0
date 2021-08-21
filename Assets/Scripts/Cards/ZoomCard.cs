@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class ZoomCard : NetworkBehaviour , IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject zoomCard;
+    [SerializeField] private CardData cardData;
 
     private float timer = 0;
     private float timeTillZoom = 0.15f;
@@ -31,13 +32,13 @@ public class ZoomCard : NetworkBehaviour , IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!hasAuthority) return; //add and if card is not played
+        if (!hasAuthority && cardData.state != CardState.Board) return;
         isHovering = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!hasAuthority) return; //add and if card is not played
+        if (!hasAuthority && cardData.state != CardState.Board) return;
 
         if (isHovering || isZooming)
         {
@@ -59,6 +60,8 @@ public class ZoomCard : NetworkBehaviour , IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!hasAuthority && cardData.state != CardState.Board) return;
+
         UnZoom();
     }
 }

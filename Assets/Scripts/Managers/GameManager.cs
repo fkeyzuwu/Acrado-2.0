@@ -23,6 +23,11 @@ public class GameManager : NetworkBehaviour
     [SyncVar] public int player2Mana = 0;
     [SyncVar] public int whosTurn = 0;
 
+    void Start()
+    {
+        cardManager = GetComponent<CardManager>();
+    }
+
     [Command(requiresAuthority = false)]
     public void CmdIsPlayerReady(bool isReady)
     {
@@ -54,6 +59,7 @@ public class GameManager : NetworkBehaviour
         Debug.Log("Game Started!");
 
         UpdateMana();
+        //draw 5 cards for each player
     }
 
     [Command(requiresAuthority = false)]
@@ -69,7 +75,7 @@ public class GameManager : NetworkBehaviour
         }
 
         UpdateMana();
-        
+        //draw card for the gamestate player;
     }
 
     [Server]

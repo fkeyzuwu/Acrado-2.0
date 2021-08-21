@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ZoomCardDisplay : MonoBehaviour
 {
-    [SerializeField] private CardDisplay cardDisplay;
+    [SerializeField] private CardData cardData;
     [SerializeField] private Card card;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI descriptionText;
@@ -17,7 +17,7 @@ public class ZoomCardDisplay : MonoBehaviour
 
     void Start()
     {
-        card = cardDisplay.Card;
+        card = cardData.Card;
         nameText.text = card.name;
         descriptionText.text = card.description;
         image.sprite = card.sprite;

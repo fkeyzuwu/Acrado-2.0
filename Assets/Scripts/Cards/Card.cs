@@ -14,7 +14,7 @@ public class Card : ScriptableObject
     public int attack;
     public int health;
 
-    public CardState state = CardState.Deck;
+    public CardState state = CardState.Uninitialized;
 
     //TODO: add list of effects of some sort once i work on game logic
 }

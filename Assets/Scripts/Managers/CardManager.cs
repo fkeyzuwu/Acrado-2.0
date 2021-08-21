@@ -8,6 +8,9 @@ public class CardManager : NetworkBehaviour
 {
     private GameManager gameManager;
 
+    private Deck player1Deck;
+    private Deck player2Deck;
+
     private Transform playerHand;
     private Transform playerBoard;
 
@@ -41,12 +44,12 @@ public class CardManager : NetworkBehaviour
     {
         if (hasAuthority)
         {
-            cardObject.GetComponent<CardDisplay>().InitializeCard(cardName);
+            cardObject.GetComponent<CardData>().InitializeCard(cardName);
         }
         else if (cardState == CardState.Board)
         {
             cardObject.GetComponent<CardFlipper>().Flip();
-            cardObject.GetComponent<CardDisplay>().InitializeCard(cardName);
+            cardObject.GetComponent<CardData>().InitializeCard(cardName);
         }
         else
         {

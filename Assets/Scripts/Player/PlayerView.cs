@@ -35,7 +35,12 @@ public class PlayerView : NetworkBehaviour
         GameManager.CmdIsPlayerReady(isReady);
     }
 
-    public void PlayCard()
+    public void DrawCard(int amount)
+    {
+        CardManager.CmdDrawCards(amount);
+    }
+
+    public void PlayCard(GameObject cardObject)
     {
         if (IsMyTurn)
         {
