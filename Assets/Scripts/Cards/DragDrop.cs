@@ -32,6 +32,7 @@ public class DragDrop : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
 
         playerView = NetworkClient.connection.identity.GetComponent<PlayerView>();
     }
+
     void Update()
     {
         if (isDragging)
@@ -81,8 +82,7 @@ public class DragDrop : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             transform.SetParent(playerBoard.transform, false);
             isDraggable = false;
-            PlayerView PlayerView = NetworkClient.connection.identity.GetComponent<PlayerView>();
-            PlayerView.PlayCard(gameObject);
+            playerView.PlayCard(gameObject);
             isDraggable = false;
         }
         else

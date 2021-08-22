@@ -60,9 +60,7 @@ public class GameManager : NetworkBehaviour
         Debug.Log("Game Started!");
 
         UpdateMana();
-        Debug.Log("Start Game");
         cardManager.RpcDrawCards(5);
-        Debug.Log("Drew Cards");
     }
 
     [Command(requiresAuthority = false)]

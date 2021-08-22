@@ -28,6 +28,7 @@ public class CardManager : NetworkBehaviour
     public void CmdDrawCards(int amount, int playerID, NetworkConnectionToClient sender = null)
     {
         Deck deck = null;
+        PlayerView player = sender.identity.GetComponent<PlayerView>();
 
         if (playerID == 1)
         {
@@ -43,7 +44,7 @@ public class CardManager : NetworkBehaviour
             GameObject cardObject = Instantiate(cardPrefab);
             NetworkServer.Spawn(cardObject, sender);
             string cardName = deck.CardDeck.Pop();
-            sender.identity.GetComponent<PlayerView>().RpcShowCard(cardObject, cardName, CardState.Hand);
+            player.RpcShowCard(cardObject, cardName, CardState.Hand);
             cardObject.GetComponent<CardData>().InitializeCard(cardName);
         }
     }
