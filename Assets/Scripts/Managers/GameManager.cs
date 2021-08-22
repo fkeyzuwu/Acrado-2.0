@@ -89,7 +89,11 @@ public class GameManager : NetworkBehaviour
         }
 
         UpdateMana();
-        //figure out a way to draw cards for oppisite player
+
+        int playerID = gameState == GameState.Player1Turn ? 1 : 2;
+
+        NetworkConnectionToClient connection = NetworkServer.connections[playerID];
+        cardManager.TargetDrawCards(connection, 1);
     }
 
     [Server]

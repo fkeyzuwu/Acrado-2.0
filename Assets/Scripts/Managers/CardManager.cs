@@ -39,6 +39,12 @@ public class CardManager : NetworkBehaviour
             deck = player2Deck;
         }
 
+        if(deck.CardDeck.Count < amount)
+        {
+            Debug.Log("can't draw more cards when deck is empty/gonna be empty");
+            return;
+        }
+
         for (int i = 0; i < amount; i++)
         {
             GameObject cardObject = Instantiate(cardPrefab);
@@ -74,6 +80,13 @@ public class CardManager : NetworkBehaviour
 
     [ClientRpc]
     public void RpcDrawCards(int amount)
+    {
+        PlayerView player = NetworkClient.connection.identity.GetComponent<PlayerView>();
+        player.DrawCard(amount);
+    }
+
+    [TargetRpc]
+    public void TargetDrawCards(NetworkConnection target, int amount)
     {
         PlayerView player = NetworkClient.connection.identity.GetComponent<PlayerView>();
         player.DrawCard(amount);
