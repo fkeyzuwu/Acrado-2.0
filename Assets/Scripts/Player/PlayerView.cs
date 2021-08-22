@@ -15,6 +15,12 @@ public class PlayerView : NetworkBehaviour
     private GameManager gameManager;
     private CardManager cardManager;
 
+    private Transform playerHand;
+    private Transform playerBoard;
+
+    private Transform enemyHand;
+    private Transform enemyBoard;
+
     protected virtual void Start()
     {
         if (isServer)
@@ -23,6 +29,11 @@ public class PlayerView : NetworkBehaviour
             MyID = ActivePlayers.Count;
             Debug.Log(MyID);
         }
+
+        playerHand = GameObject.Find("PlayerHand").transform;
+        playerBoard = GameObject.Find("PlayerBoard").transform;
+        enemyHand = GameObject.Find("EnemyHand").transform;
+        enemyBoard = GameObject.Find("EnemyBoard").transform;
     }
 
     protected virtual void OnDestroy()
@@ -37,14 +48,45 @@ public class PlayerView : NetworkBehaviour
 
     public void DrawCard(int amount)
     {
-        CardManager.CmdDrawCards(amount);
+        CardManager.CmdDrawCards(amount, MyID);
+    }
+
+    [ClientRpc]
+    public void RpcShowCard(GameObject cardObject, string cardName, CardState cardState)
+    {
+        if (cardState == CardState.Hand)
+        {
+            if (hasAuthority)
+            {
+                cardObject.transform.SetParent(playerHand, false);
+                cardObject.GetComponent<CardData>().InitializeCard(cardName);
+            }
+            else
+            {
+                cardObject.transform.SetParent(enemyHand, false);
+                cardObject.GetComponent<CardFlipper>().Flip();
+            }
+        }
+        else if (cardState == CardState.Board)
+        {
+            if (hasAuthority)
+            {
+                cardObject.transform.SetParent(playerBoard, false);
+            }
+            else
+            {
+                cardObject.transform.SetParent(enemyBoard, false);
+                cardObject.GetComponent<CardData>().InitializeCard(cardName);
+                cardObject.GetComponent<CardFlipper>().Flip();
+            }
+        }
     }
 
     public void PlayCard(GameObject cardObject)
     {
         if (IsMyTurn)
         {
-            //do stuff
+            cardManager.CmdPlayCard(cardObject);
         }
     }
 
@@ -106,7 +148,7 @@ public class PlayerView : NetworkBehaviour
         {
             if (cardManager == null)
             {
-                cardManager = GameObject.Find("GameManager").GetComponent<CardManager>();
+                cardManager = GameObject.Find("CardManager").GetComponent<CardManager>();
             }
 
             return cardManager;

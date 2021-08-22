@@ -17,7 +17,8 @@ public class ZoomCardDisplay : MonoBehaviour
 
     void Start()
     {
-        card = cardData.Card;
+        card = cardData.card;
+        Debug.Log(card);
         nameText.text = card.name;
         descriptionText.text = card.description;
         image.sprite = card.sprite;

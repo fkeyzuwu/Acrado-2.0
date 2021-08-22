@@ -24,6 +24,11 @@ public class DragDrop : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             isDraggable = false;
         }
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
 
         playerView = NetworkClient.connection.identity.GetComponent<PlayerView>();
     }

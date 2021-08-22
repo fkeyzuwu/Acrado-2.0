@@ -578,6 +578,7 @@ RectTransform:
   m_Children:
   - {fileID: 659489085392266838}
   - {fileID: 9111284752519589813}
+  - {fileID: 1669275769560895436}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -728,8 +729,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   cardDisplay: {fileID: -7343797626388244758}
-  card: {fileID: 0}
-  state: 0
+  card: {fileID: 11400000, guid: 9577fb25e71e9d94c823d2ef626e4fdc, type: 2}
 --- !u!1 &2032973484130941725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,7 +1198,6 @@ RectTransform:
   - {fileID: 6579503359724533900}
   - {fileID: 5002170868802950279}
   - {fileID: 4572450570900275435}
-  - {fileID: 1669275769560895436}
   m_Father: {fileID: 4852987816779433057}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1685,14 +1684,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2735849, g: 0.1974457, b: 0.1974457, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 40dcf0a35a6f3cf4992af32fd12bc804, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2133,14 +2132,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6872751651751079978}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 2368198364655334151}
   - {fileID: 4104864022608130284}
-  m_Father: {fileID: 9111284752519589813}
-  m_RootOrder: 4
+  m_Father: {fileID: 4852987816779433057}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2160,7 +2159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 4634688475530423127}
-  card: {fileID: 0}
+  card: {fileID: 11400000, guid: 9577fb25e71e9d94c823d2ef626e4fdc, type: 2}
   nameText: {fileID: 9069165482106444005}
   descriptionText: {fileID: 1001017256489164213}
   image: {fileID: 7815237317214725840}

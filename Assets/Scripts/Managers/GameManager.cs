@@ -25,7 +25,8 @@ public class GameManager : NetworkBehaviour
 
     void Start()
     {
-        cardManager = GetComponent<CardManager>();
+        cardManager = GameObject.Find("CardManager").GetComponent<CardManager>();
+        Debug.Log(cardManager);
     }
 
     [Command(requiresAuthority = false)]
@@ -59,7 +60,9 @@ public class GameManager : NetworkBehaviour
         Debug.Log("Game Started!");
 
         UpdateMana();
-        //draw 5 cards for each player
+        Debug.Log("Start Game");
+        cardManager.RpcDrawCards(5);
+        Debug.Log("Drew Cards");
     }
 
     [Command(requiresAuthority = false)]
@@ -75,7 +78,7 @@ public class GameManager : NetworkBehaviour
         }
 
         UpdateMana();
-        //draw card for the gamestate player;
+        //figure out a way to draw cards
     }
 
     [Server]
@@ -102,7 +105,7 @@ public class GameManager : NetworkBehaviour
         PlayerView player = NetworkClient.connection.identity.GetComponent<PlayerView>();
         player.IsMyTurn = player.MyGameState == gameState;
         endTurnButton.interactable = player.IsMyTurn;
-        endTurnButton.GetComponent<TextMeshProUGUI>().text = player.IsMyTurn ? "End Turn" : "Enemy Turn";
+        endTurnButton.GetComponentInChildren<TextMeshProUGUI>().text = player.IsMyTurn ? "End Turn" : "Enemy Turn";
     }
 
     [ClientRpc]

@@ -11,56 +11,53 @@ public class CardManager : NetworkBehaviour
     private Deck player1Deck;
     private Deck player2Deck;
 
-    private Transform playerHand;
-    private Transform playerBoard;
-
-    private Transform enemyHand;
-    private Transform enemyBoard;
-
-
     [SerializeField] GameObject cardPrefab;
 
     protected virtual void Start()
     {
-        playerHand = GameObject.Find("PlayerHand").transform;
-        playerBoard = GameObject.Find("PlayerBoard").transform;
-        enemyHand = GameObject.Find("EnemyHand").transform;
-        enemyBoard = GameObject.Find("EnemyBoard").transform;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+
+    public override void OnStartServer()
+    {
+        player1Deck = GameObject.Find("Player1Deck").GetComponent<Deck>();
+        player2Deck = GameObject.Find("Player2Deck").GetComponent<Deck>();
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdDrawCards(int amount, int playerID, NetworkConnectionToClient sender = null)
+    {
+        Deck deck = null;
+
+        if (playerID == 1)
+        {
+            deck = player1Deck;
+        }
+        else if (playerID == 2)
+        {
+            deck = player2Deck;
+        }
+
+        for (int i = 0; i < amount; i++)
+        {
+            GameObject cardObject = Instantiate(cardPrefab);
+            NetworkServer.Spawn(cardObject, sender);
+            string cardName = deck.CardDeck.Pop();
+            sender.identity.GetComponent<PlayerView>().RpcShowCard(cardObject, cardName, CardState.Hand);
+            cardObject.GetComponent<CardData>().InitializeCard(cardName);
+        }
     }
 
     [Command]
-    public void CmdDrawCards(int amount)
+    public void CmdPlayCard(GameObject cardObject)
     {
-        for (int i = 0; i < amount; i++)
-        {
-            GameObject cardObject = Instantiate(cardPrefab, playerHand);
-            NetworkServer.Spawn(cardObject, connectionToClient);
-            RpcShowCard(cardObject, "get this from deck", CardState.Hand);
-        }
+
     }
 
     [ClientRpc]
-    public void RpcShowCard(GameObject cardObject, string cardName, CardState cardState)
+    public void RpcDrawCards(int amount)
     {
-        if (hasAuthority)
-        {
-            cardObject.GetComponent<CardData>().InitializeCard(cardName);
-        }
-        else if (cardState == CardState.Board)
-        {
-            cardObject.GetComponent<CardFlipper>().Flip();
-            cardObject.GetComponent<CardData>().InitializeCard(cardName);
-        }
-        else
-        {
-            cardObject.GetComponent<CardFlipper>().Flip();
-        }
-    }
-
-    [Server]
-    private Deck GetDeck(int playerID)
-    {
-        Deck deck = new Deck();
-        return deck;
+        PlayerView player = NetworkClient.connection.identity.GetComponent<PlayerView>();
+        player.DrawCard(amount);
     }
 }

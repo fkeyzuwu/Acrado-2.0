@@ -16,13 +16,14 @@ public class ZoomCard : NetworkBehaviour , IPointerEnterHandler, IPointerExitHan
 
     void Update()
     {
+        if (!CanSee()) return;
+
         if (isHovering && !isZooming)
         {
             timer += Time.deltaTime;
 
             if (timer >= timeTillZoom)
             {
-
                 Zoom();
                 isZooming = true;
                 timer = 0;
@@ -32,13 +33,14 @@ public class ZoomCard : NetworkBehaviour , IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!hasAuthority && cardData.state != CardState.Board) return;
+        if (!CanSee()) return;
+
         isHovering = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!hasAuthority && cardData.state != CardState.Board) return;
+        if (!CanSee()) return;
 
         if (isHovering || isZooming)
         {
@@ -60,8 +62,27 @@ public class ZoomCard : NetworkBehaviour , IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!hasAuthority && cardData.state != CardState.Board) return;
+        if (!CanSee()) return;
 
         UnZoom();
+    }
+
+    private bool CanSee()
+    {
+        if (!hasAuthority)
+        {
+            if(cardData.card.state != CardState.Board)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return true;
+        }
     }
 }
