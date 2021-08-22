@@ -55,6 +55,7 @@ public class CardManager : NetworkBehaviour
         PlayerView player = sender.identity.GetComponent<PlayerView>();
         Card card = cardObject.GetComponent<CardData>().card;
         player.RpcShowCard(cardObject, cardObject.name, CardState.Board);
+
         if(player.MyGameState == GameState.Player1Turn)
         {
             if((gameManager.player1CurrentMana - card.manaCost) >= 0)

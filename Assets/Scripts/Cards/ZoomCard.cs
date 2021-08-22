@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 using UnityEngine.EventSystems;
 
-public class ZoomCard : NetworkBehaviour , IPointerEnterHandler, IPointerExitHandler
+public class ZoomCard : NetworkBehaviour , IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     [SerializeField] private GameObject zoomCard;
     [SerializeField] private CardData cardData;

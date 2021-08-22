@@ -66,6 +66,8 @@ public class PlayerView : NetworkBehaviour
                 cardObject.transform.SetParent(enemyHand, false);
                 cardObject.GetComponent<CardFlipper>().Flip();
             }
+
+            cardObject.GetComponent<CardData>().card.state = CardState.Hand;
         }
         else if (cardState == CardState.Board)
         {
@@ -79,6 +81,8 @@ public class PlayerView : NetworkBehaviour
                 cardObject.GetComponent<CardData>().InitializeCard(cardName);
                 cardObject.GetComponent<CardFlipper>().Flip();
             }
+
+            cardObject.GetComponent<CardData>().card.state = CardState.Board;
         }
     }
 
