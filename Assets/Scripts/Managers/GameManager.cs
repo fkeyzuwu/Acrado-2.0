@@ -19,8 +19,11 @@ public class GameManager : NetworkBehaviour
     [SyncVar] public int player1ID = 1;
     [SyncVar] public int player2ID = 2;
 
-    [SyncVar] public int player1Mana = 0;
-    [SyncVar] public int player2Mana = 0;
+    [SyncVar] public int player1MaxMana = 0;
+    [SyncVar] public int player2MaxMana = 0;
+    [SyncVar] public int player1CurrentMana = 0;
+    [SyncVar] public int player2CurrentMana = 0;
+
     [SyncVar] public int whosTurn = 0;
 
     void Start()
@@ -76,7 +79,7 @@ public class GameManager : NetworkBehaviour
         }
 
         UpdateMana();
-        //figure out a way to draw cards
+        //figure out a way to draw cards for oppisite player
     }
 
     [Server]
@@ -84,17 +87,19 @@ public class GameManager : NetworkBehaviour
     {
         if (gameState == GameState.Player1Turn)
         {
-            if (player1Mana < 10)
+            if (player1MaxMana < 10)
             {
-                player1Mana++;
+                player1MaxMana++;
             }
+            player1CurrentMana = player1MaxMana;
         }
         else
         {
-            if (player2Mana < 10)
+            if (player2MaxMana < 10)
             {
-                player2Mana++;
+                player2MaxMana++;
             }
+            player2CurrentMana = player2MaxMana;
         }
     }
 

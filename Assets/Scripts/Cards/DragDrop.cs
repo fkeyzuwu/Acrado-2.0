@@ -4,9 +4,12 @@ using Mirror;
 
 public class DragDrop : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    private GameManager gameManager;
     private GameObject canvas;
     private GameObject playerBoard;
     private PlayerView playerView;
+
+    [SerializeField] private CardData cardData;
 
     private bool isDragging = false;
     private bool isDraggable = true;
@@ -18,11 +21,13 @@ public class DragDrop : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
     void Start()
     {
         canvas = GameObject.Find("Canvas");
-        playerBoard = GameObject.Find("playerBoard");
+        playerBoard = GameObject.Find("PlayerBoard");
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         if (!hasAuthority)
         {
             isDraggable = false;
+            Debug.Log(isDraggable);
         }
     }
 
@@ -63,6 +68,10 @@ public class DragDrop : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (!playerView.IsMyTurn) return;
 
+        int playerMana = playerView.MyGameState == GameState.Player1Turn ? gameManager.player1CurrentMana : gameManager.player2CurrentMana;
+
+        if (cardData.card.manaCost > playerMana) return;
+
         isDragging = true;
         startParent = transform.parent.gameObject;
         startPosition = transform.position;
@@ -76,12 +85,13 @@ public class DragDrop : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (!playerView.IsMyTurn) return;
 
+        if (isDragging == false) return;
+
         isDragging = false;
 
         if (isOverPlayerBoard && playerBoard.transform.childCount < 10)
         {
             transform.SetParent(playerBoard.transform, false);
-            isDraggable = false;
             playerView.PlayCard(gameObject);
             isDraggable = false;
         }

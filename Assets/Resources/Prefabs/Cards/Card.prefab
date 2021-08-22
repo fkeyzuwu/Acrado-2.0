@@ -667,6 +667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  cardData: {fileID: 4634688475530423127}
 --- !u!114 &-3793591735298218982
 MonoBehaviour:
   m_ObjectHideFlags: 0
