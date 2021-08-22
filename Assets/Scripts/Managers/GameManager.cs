@@ -8,6 +8,8 @@ using TMPro;
 public class GameManager : NetworkBehaviour
 {
     private CardManager cardManager;
+    private TextMeshProUGUI playerMana;
+    private TextMeshProUGUI enemyMana;
 
     private Button endTurnButton;
 
@@ -19,17 +21,25 @@ public class GameManager : NetworkBehaviour
     [SyncVar] public int player1ID = 1;
     [SyncVar] public int player2ID = 2;
 
-    [SyncVar] public int player1MaxMana = 0;
-    [SyncVar] public int player2MaxMana = 0;
-    [SyncVar] public int player1CurrentMana = 0;
-    [SyncVar] public int player2CurrentMana = 0;
+    [SyncVar(hook = nameof(UpdateManaUI))]
+    public int player1MaxMana = 0;
+
+    [SyncVar(hook = nameof(UpdateManaUI))]
+    public int player2MaxMana = 0;
+
+    [SyncVar(hook = nameof(UpdateManaUI))]
+    public int player1CurrentMana = 0;
+
+    [SyncVar(hook = nameof(UpdateManaUI))]
+    public int player2CurrentMana = 0;
 
     [SyncVar] public int whosTurn = 0;
 
     void Start()
     {
         cardManager = GameObject.Find("CardManager").GetComponent<CardManager>();
-        Debug.Log(cardManager);
+        playerMana = GameObject.Find("PlayerMana").GetComponentInChildren<TextMeshProUGUI>();
+        enemyMana = GameObject.Find("EnemyMana").GetComponentInChildren<TextMeshProUGUI>();
     }
 
     [Command(requiresAuthority = false)]
@@ -116,5 +126,23 @@ public class GameManager : NetworkBehaviour
     {
         GameObject buttonObject = GameObject.Find("EndTurnButton");
         endTurnButton = buttonObject.GetComponent<Button>();
+    }
+
+    private void UpdateManaUI(int _, int newValue)
+    {
+        if(NetworkClient.connection.identity.GetComponent<PlayerView>().MyID == 1)
+        {
+            playerMana.text = $"{player1CurrentMana} / {player1MaxMana}";
+            enemyMana.text = $"{player2CurrentMana} / {player2MaxMana}";
+        }
+        else if(NetworkClient.connection.identity.GetComponent<PlayerView>().MyID == 2)
+        {
+            playerMana.text = $"{player2CurrentMana} / {player2MaxMana}";
+            enemyMana.text = $"{player1CurrentMana} / {player1MaxMana}";
+        }
+        else
+        {
+            Debug.Log("uhhhh wtf");
+        }
     }
 }

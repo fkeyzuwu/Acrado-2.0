@@ -27,7 +27,6 @@ public class PlayerView : NetworkBehaviour
         {
             ActivePlayers.Add(this);
             MyID = ActivePlayers.Count;
-            Debug.Log(MyID);
         }
 
         playerHand = GameObject.Find("PlayerHand").transform;
@@ -127,7 +126,6 @@ public class PlayerView : NetworkBehaviour
             }
             else
             {
-                Debug.Log("Shit Connection LMAO");
                 return GameState.Setup;
             }
         }
