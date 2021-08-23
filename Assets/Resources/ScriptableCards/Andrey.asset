@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Andrey
   m_EditorClassIdentifier: 
   name: Andrey
-  description: The best in the south
+  description: 'Battlecry: Heal a unit for 2.'
   sprite: {fileID: 21300000, guid: 8bd280dade976e24c97f59f5d55b05e4, type: 3}
   manaCost: 1
-  attack: 6
-  health: 9
+  attack: 1
+  health: 2
+  state: 0
+  effects: []
+  references:
+    version: 1

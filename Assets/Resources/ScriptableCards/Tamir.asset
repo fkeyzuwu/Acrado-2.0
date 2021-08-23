@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Tamir
   m_EditorClassIdentifier: 
   name: Tamir
-  description: The best in the west
+  description: 'Battlecry: Deal 3 Damage to a random target.'
   sprite: {fileID: 21300000, guid: e2290507d25d6ab469598f51f8543906, type: 3}
-  manaCost: 3
+  manaCost: 2
   attack: 2
-  health: 5
+  health: 2
+  state: 0
+  effects: []
+  references:
+    version: 1

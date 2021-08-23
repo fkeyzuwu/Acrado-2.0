@@ -19,3 +19,6 @@ MonoBehaviour:
   attack: 0
   health: 0
   state: 0
+  effects: []
+  references:
+    version: 1

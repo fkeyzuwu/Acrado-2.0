@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Card", menuName = "Card")]
@@ -16,5 +19,5 @@ public class Card : ScriptableObject
 
     public CardState state = CardState.Uninitialized;
 
-    //TODO: add list of effects of some sort once i work on game logic
+    [SerializeReference] public List<CardEffect> effects;
 }

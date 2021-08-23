@@ -73,6 +73,7 @@ public class GameManager : NetworkBehaviour
         Debug.Log("Game Started!");
 
         UpdateMana();
+        DrawCardForPlayerOnTurnStart();
         cardManager.RpcDrawCards(5);
     }
 
@@ -89,9 +90,13 @@ public class GameManager : NetworkBehaviour
         }
 
         UpdateMana();
+        DrawCardForPlayerOnTurnStart();
+    }
 
+    [Server]
+    private void DrawCardForPlayerOnTurnStart()
+    {
         int playerID = gameState == GameState.Player1Turn ? 1 : 2;
-
         NetworkConnectionToClient connection = NetworkServer.connections[playerID];
         cardManager.TargetDrawCards(connection, 1);
     }

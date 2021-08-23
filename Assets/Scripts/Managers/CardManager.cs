@@ -75,7 +75,7 @@ public class CardManager : NetworkBehaviour
             {
                 gameManager.player2CurrentMana -= card.manaCost;
             }
-        } 
+        }
     }
 
     [ClientRpc]
