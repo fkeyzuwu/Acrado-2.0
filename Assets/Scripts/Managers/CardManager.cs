@@ -64,16 +64,16 @@ public class CardManager : NetworkBehaviour
 
         if(player.MyGameState == GameState.Player1Turn)
         {
-            if((gameManager.player1CurrentMana - card.manaCost) >= 0)
+            if((gameManager.player1CurrentMana - card.ManaCost) >= 0)
             {
-                gameManager.player1CurrentMana -= card.manaCost;
+                gameManager.player1CurrentMana -= card.ManaCost;
             }
         }
         else
         {
-            if((gameManager.player2CurrentMana - card.manaCost) >= 0)
+            if((gameManager.player2CurrentMana - card.ManaCost) >= 0)
             {
-                gameManager.player2CurrentMana -= card.manaCost;
+                gameManager.player2CurrentMana -= card.ManaCost;
             }
         }
     }

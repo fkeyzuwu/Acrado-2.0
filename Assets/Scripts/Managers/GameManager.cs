@@ -154,4 +154,18 @@ public class GameManager : NetworkBehaviour
             Debug.Log("uhhhh wtf");
         }
     }
+
+    [Command]
+    public void CmdUpdateCard(GameObject cardObject)
+    {
+        Card card = cardObject.GetComponent<CardData>().card;
+
+        RpcUpdateCard(cardObject);
+    }
+
+    [ClientRpc]
+    private void RpcUpdateCard(GameObject cardObject)
+    {
+
+    }
 }

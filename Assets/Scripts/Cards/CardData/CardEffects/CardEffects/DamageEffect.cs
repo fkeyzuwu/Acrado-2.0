@@ -8,9 +8,9 @@ public class DamageEffect : CardEffect
     public override void Activate()
     {
         Card card = target.targetCard.GetComponent<CardData>().card;
-        card.health -= damage;
+        card.Health -= damage;
 
-        if (card.health <= 0)
+        if (card.Health <= 0)
         {
             Object.Destroy(target.targetCard);
         }
