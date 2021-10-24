@@ -1,2 +1,2 @@
 # Acrado 2.0
- Unity multiplayer card game using mirror (last one was fucked)
+Unity Multiplayer Card Game using Mirror.
