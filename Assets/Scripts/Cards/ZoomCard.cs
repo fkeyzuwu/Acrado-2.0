@@ -71,7 +71,7 @@ public class ZoomCard : NetworkBehaviour , IPointerEnterHandler, IPointerExitHan
     {
         if (!hasAuthority)
         {
-            if(cardData.card.state != CardState.Board)
+            if(cardData.state != CardState.Board)
             {
                 return false;
             }

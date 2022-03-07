@@ -751,7 +751,10 @@ MonoBehaviour:
   syncInterval: 0.1
   cardDisplay: {fileID: -7343797626388244758}
   state: 0
-  AttacksLeft: 1
+  currentMana: 0
+  currentHealth: 0
+  currentAttack: 0
+  AttacksLeft: 0
   card: {fileID: 11400000, guid: 9577fb25e71e9d94c823d2ef626e4fdc, type: 2}
 --- !u!50 &8219791648865408187
 Rigidbody2D:

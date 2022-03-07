@@ -82,10 +82,18 @@ public class GameManager : NetworkBehaviour
         if(gameState == GameState.Player1Turn)
         {
             gameState = GameState.Player2Turn;
+            foreach(CardData card in MatchDatabase.instance.Player2CurrentBoard)
+            {
+                card.AttacksLeft = 1;
+            }
         }
         else
         {
             gameState = GameState.Player1Turn;
+            foreach (CardData card in MatchDatabase.instance.Player1CurrentBoard)
+            {
+                card.AttacksLeft = 1;
+            }
         }
 
         UpdateMana();

@@ -87,7 +87,22 @@ public class CardManager : NetworkBehaviour
     public void CmdAttackCard(CardData attacker, CardData defender)
     {
         Debug.Log($"{attacker.card.name} attacked {defender.card.name}!");
+        defender.currentHealth -= attacker.currentAttack;
+        attacker.currentHealth -= defender.currentAttack;
+
         attacker.AttacksLeft--;
+
+        if (defender.currentHealth <= 0)
+        {
+            NetworkServer.Destroy(defender.gameObject);
+            Debug.Log($"{defender.card.name} died!");
+        }
+
+        if(attacker.currentHealth <= 0)
+        {
+            NetworkServer.Destroy(attacker.gameObject);
+            Debug.Log($"{attacker.card.name} died!");
+        }
     }
 
     [ClientRpc]

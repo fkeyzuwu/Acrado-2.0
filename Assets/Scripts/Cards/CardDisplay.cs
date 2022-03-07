@@ -20,4 +20,19 @@ public class CardDisplay : NetworkBehaviour
         attackText.text = card.attack.ToString();
         healthText.text = card.health.ToString();
     }
+
+    public void UpdateManaCostText(int manaCost)
+    {
+        manaCostText.text = manaCost.ToString();
+    }
+
+    public void UpdateHealthText(int health)
+    {
+        healthText.text = health.ToString();
+    }
+
+    public void UpdateAttackText(int attack)
+    {
+        attackText.text = attack.ToString();
+    }
 }
