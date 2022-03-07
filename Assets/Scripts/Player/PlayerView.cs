@@ -59,7 +59,7 @@ public class PlayerView : NetworkBehaviour
             if (hasAuthority)
             {
                 cardObject.transform.SetParent(playerHand, false);
-                cardObject.GetComponent<CardData>().InitializeCard(cardName);
+                cardObject.GetComponent<CardData>().InitializeCard(cardName, MyID);
             }
             else
             {
@@ -78,7 +78,8 @@ public class PlayerView : NetworkBehaviour
             else
             {
                 cardObject.transform.SetParent(enemyBoard, false);
-                cardObject.GetComponent<CardData>().InitializeCard(cardName);
+                int enemyID = MyID == 1 ? 2 : 1;
+                cardObject.GetComponent<CardData>().InitializeCard(cardName, enemyID);
                 cardObject.GetComponent<CardFlipper>().Flip();
             }
 

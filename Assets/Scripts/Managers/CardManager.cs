@@ -52,7 +52,7 @@ public class CardManager : NetworkBehaviour
             NetworkServer.Spawn(cardObject, sender);
             string cardName = deck.CardDeck.Pop();
             player.RpcShowCard(cardObject, cardName, CardState.Hand);
-            cardObject.GetComponent<CardData>().InitializeCard(cardName);
+            cardObject.GetComponent<CardData>().InitializeCard(cardName, player.MyID);
             MatchDatabase.instance.AddCardToHand(playerID, cardObject.GetComponent<CardData>());
         }
     }
@@ -82,7 +82,6 @@ public class CardManager : NetworkBehaviour
         MatchDatabase.instance.RemoveCardFromHand(player.MyID, cardObject.GetComponent<CardData>());
         MatchDatabase.instance.AddCardToBoard(player.MyID, cardObject.GetComponent<CardData>());
     }
-
     [Command(requiresAuthority = false)]
     public void CmdAttackCard(CardData attacker, CardData defender)
     {
@@ -95,12 +94,16 @@ public class CardManager : NetworkBehaviour
         if (defender.currentHealth <= 0)
         {
             NetworkServer.Destroy(defender.gameObject);
+            MatchDatabase.instance.RemoveCardFromBoard(defender.ownerID, defender);
+            MatchDatabase.instance.AddCardToGraveyard(defender.ownerID, defender);
             Debug.Log($"{defender.card.name} died!");
         }
 
         if(attacker.currentHealth <= 0)
         {
             NetworkServer.Destroy(attacker.gameObject);
+            MatchDatabase.instance.RemoveCardFromBoard(attacker.ownerID, attacker);
+            MatchDatabase.instance.AddCardToGraveyard(attacker.ownerID, attacker);
             Debug.Log($"{attacker.card.name} died!");
         }
     }

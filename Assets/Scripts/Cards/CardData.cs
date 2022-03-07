@@ -6,6 +6,7 @@ using Mirror;
 public class CardData : NetworkBehaviour
 {
     private string path = "ScriptableCards/";
+    [SyncVar] public int ownerID;
 
     [SerializeField] private CardDisplay cardDisplay;
     [SyncVar] public CardState state = CardState.Uninitialized;
@@ -18,9 +19,10 @@ public class CardData : NetworkBehaviour
 
     public Card card;
 
-    public void InitializeCard(string cardName)
+    public void InitializeCard(string cardName, int ownerID)
     {
         card = Resources.Load<Card>(path + cardName);
+        this.ownerID = ownerID;
         state = CardState.Hand;
         currentMana = card.manaCost;
         currentHealth = card.health;

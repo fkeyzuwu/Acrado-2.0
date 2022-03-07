@@ -13,6 +13,8 @@ public class MatchDatabase : NetworkBehaviour
     private List<CardData> player2CurrentHand = new List<CardData>();
     private List<CardData> player1CurrentBoard = new List<CardData>();
     private List<CardData> player2CurrentBoard = new List<CardData>();
+    private List<CardData> player1CurrentGraveyard = new List<CardData>();
+    private List<CardData> player2CurrentGraveyard = new List<CardData>();
 
     public List<CardData> Player1CurrentDeck { get => player1CurrentDeck; }
     public List<CardData> Player2CurrentDeck { get => player2CurrentDeck; }
@@ -20,6 +22,8 @@ public class MatchDatabase : NetworkBehaviour
     public List<CardData> Player2CurrentHand { get => player2CurrentHand; }
     public List<CardData> Player1CurrentBoard { get => player1CurrentBoard; }
     public List<CardData> Player2CurrentBoard { get => player2CurrentBoard; }
+    public List<CardData> Player1CurrentGraveyard { get => player1CurrentGraveyard; }
+    public List<CardData> Player2CurrentGraveyard { get => player2CurrentGraveyard; }
 
     void Start()
     {
@@ -80,5 +84,19 @@ public class MatchDatabase : NetworkBehaviour
         }
 
         Debug.Log($"Removed {card.card.name} From player{playerID}'s board");
+    }
+
+    public void AddCardToGraveyard(int playerID, CardData card)
+    {
+        if (playerID == 1)
+        {
+            player1CurrentGraveyard.Add(card);
+        }
+        else
+        {
+            player2CurrentGraveyard.Add(card);
+        }
+
+        Debug.Log($"Added {card.card.name} to player{playerID}'s graveyard");
     }
 }
