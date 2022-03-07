@@ -52,6 +52,7 @@ public class CardManager : NetworkBehaviour
             string cardName = deck.CardDeck.Pop();
             player.RpcShowCard(cardObject, cardName, CardState.Hand);
             cardObject.GetComponent<CardData>().InitializeCard(cardName);
+            MatchDatabase.instance.AddCardToHand(playerID, cardObject.GetComponent<CardData>());
         }
     }
 
@@ -75,7 +76,10 @@ public class CardManager : NetworkBehaviour
             {
                 gameManager.player2CurrentMana -= card.manaCost;
             }
-        } 
+        }
+
+        MatchDatabase.instance.RemoveCardFromHand(player.MyID, cardObject.GetComponent<CardData>());
+        MatchDatabase.instance.AddCardToBoard(player.MyID, cardObject.GetComponent<CardData>());
     }
 
     [ClientRpc]
