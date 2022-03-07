@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
+using System;
 
 public class PlayerView : NetworkBehaviour
 {
@@ -66,7 +67,7 @@ public class PlayerView : NetworkBehaviour
                 cardObject.GetComponent<CardFlipper>().Flip();
             }
 
-            cardObject.GetComponent<CardData>().card.state = CardState.Hand;
+            cardObject.GetComponent<CardData>().state = CardState.Hand;
         }
         else if (cardState == CardState.Board)
         {
@@ -81,7 +82,15 @@ public class PlayerView : NetworkBehaviour
                 cardObject.GetComponent<CardFlipper>().Flip();
             }
 
-            cardObject.GetComponent<CardData>().card.state = CardState.Board;
+            cardObject.GetComponent<CardData>().state = CardState.Board;
+        }
+    }
+
+    public void AttackCard(CardData attacker, CardData defender)
+    {
+        if (IsMyTurn)
+        {
+            cardManager.CmdAttackCard(attacker, defender);
         }
     }
 

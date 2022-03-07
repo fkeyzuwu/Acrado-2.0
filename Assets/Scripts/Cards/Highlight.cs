@@ -8,6 +8,7 @@ using Mirror;
 public class Highlight : NetworkBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private bool isHighlightable = true;
+    //^^make this a property that works if this thing can attack
     private bool isHighlting = false;
     [SerializeField] private Color startColor;
     [SerializeField] private Color highlightColor;

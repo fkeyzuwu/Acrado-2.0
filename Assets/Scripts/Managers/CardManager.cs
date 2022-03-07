@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using System;
 
 public class CardManager : NetworkBehaviour
 {
@@ -80,6 +81,28 @@ public class CardManager : NetworkBehaviour
 
         MatchDatabase.instance.RemoveCardFromHand(player.MyID, cardObject.GetComponent<CardData>());
         MatchDatabase.instance.AddCardToBoard(player.MyID, cardObject.GetComponent<CardData>());
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdAttackCard(CardData attacker, CardData defender)
+    {
+        Debug.Log($"{attacker.card.name} attacked {defender.card.name}!");
+        defender.currentHealth -= attacker.currentAttack;
+        attacker.currentHealth -= defender.currentAttack;
+
+        attacker.AttacksLeft--;
+
+        if (defender.currentHealth <= 0)
+        {
+            NetworkServer.Destroy(defender.gameObject);
+            Debug.Log($"{defender.card.name} died!");
+        }
+
+        if(attacker.currentHealth <= 0)
+        {
+            NetworkServer.Destroy(attacker.gameObject);
+            Debug.Log($"{attacker.card.name} died!");
+        }
     }
 
     [ClientRpc]
