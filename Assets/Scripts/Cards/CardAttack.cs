@@ -7,10 +7,10 @@ using UnityEngine.EventSystems;
 public class CardAttack : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private CardData cardData;
+    [SerializeField] private AttackArrow attackArrow;
     private PlayerView playerView;
     private bool isDragging = false;
     private bool isControllable = true;
-    private GameObject target;
 
     void Start()
     {
@@ -25,21 +25,6 @@ public class CardAttack : NetworkBehaviour, IPointerDownHandler, IPointerUpHandl
         base.OnStartClient();
 
         playerView = NetworkClient.connection.identity.GetComponent<PlayerView>();
-    }
-
-    void Update()
-    {
-        if (isDragging)
-        {
-            if (target == null)
-            {
-                //draw just the arrow no target
-            }
-            else
-            {
-                //draw with the circle on where you are currently hovering
-            }
-        }
     }
 
     public bool CanAttack
@@ -58,9 +43,9 @@ public class CardAttack : NetworkBehaviour, IPointerDownHandler, IPointerUpHandl
                 return false;
             }
 
-            if (cardData.card.state != CardState.Board)
+            if (cardData.state != CardState.Board)
             {
-                Debug.Log($"Card state is not board, it is {cardData.card.state}");
+                Debug.Log($"Card state is not board, it is {cardData.state}");
                 return false;
             }
 
@@ -79,6 +64,8 @@ public class CardAttack : NetworkBehaviour, IPointerDownHandler, IPointerUpHandl
 
         isDragging = true;
 
+        attackArrow.gameObject.SetActive(true);
+
         Debug.Log("Attacking");
     }
 
@@ -90,37 +77,16 @@ public class CardAttack : NetworkBehaviour, IPointerDownHandler, IPointerUpHandl
 
         isDragging = false;
 
-        if(target != null)
+        if (attackArrow.target != null)
         {
-            playerView.AttackCard(cardData, target.GetComponent<CardData>());
-            Debug.Log($"Attacking {target.GetComponent<CardData>().card.name}");
+            playerView.AttackCard(cardData, attackArrow.target.GetComponent<CardData>());
+            Debug.Log($"Attacking {attackArrow.target.GetComponent<CardData>().card.name}");
         }
         else
         {
             Debug.Log("no target");
         }
-    }
 
-    /// <summary>
-    /// figure out how to get the card that my mouse is moving on and stuff
-    /// </summary>
-    /// <param name="collision"></param>
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Card"))
-        {
-            target = collision.gameObject;
-            Debug.Log($"Current target - {target.GetComponent<CardData>().card.name}");
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Card"))
-        {
-            target = null;
-            Debug.Log("Currently isnt hovering over any target");
-        }
+        attackArrow.gameObject.SetActive(false);
     }
 }

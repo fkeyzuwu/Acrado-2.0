@@ -8,6 +8,7 @@ public class CardData : NetworkBehaviour
     private string path = "ScriptableCards/";
 
     [SerializeField] private CardDisplay cardDisplay;
+    [SyncVar] public CardState state = CardState.Uninitialized;
     [SyncVar] public int AttacksLeft = 1;
     // ^^each turn reset this using the matchdatabase going through all the cards in the players side of the board, reseting the attacks left to 1
 
@@ -17,7 +18,7 @@ public class CardData : NetworkBehaviour
     {
         card = Resources.Load<Card>(path + cardName);
 
-        card.state = CardState.Hand;
+        state = CardState.Hand;
 
         cardDisplay.InitializeCard(card);
     }
