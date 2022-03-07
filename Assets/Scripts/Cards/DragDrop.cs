@@ -27,7 +27,6 @@ public class DragDrop : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
         if (!hasAuthority)
         {
             isDraggable = false;
-            Debug.Log(isDraggable);
         }
     }
 
