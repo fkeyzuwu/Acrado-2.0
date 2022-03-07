@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using System;
 
 public class CardManager : NetworkBehaviour
 {
@@ -80,6 +81,13 @@ public class CardManager : NetworkBehaviour
 
         MatchDatabase.instance.RemoveCardFromHand(player.MyID, cardObject.GetComponent<CardData>());
         MatchDatabase.instance.AddCardToBoard(player.MyID, cardObject.GetComponent<CardData>());
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdAttackCard(CardData attacker, CardData defender)
+    {
+        Debug.Log($"{attacker.card.name} attcked {defender.card.name}!");
+        attacker.AttacksLeft--;
     }
 
     [ClientRpc]

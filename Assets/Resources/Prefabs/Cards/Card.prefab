@@ -557,12 +557,13 @@ GameObject:
   - component: {fileID: -3793591735298218982}
   - component: {fileID: 384778167893655789}
   - component: {fileID: 1454612673911309388}
+  - component: {fileID: 3415136986594442328}
   - component: {fileID: 4634688475530423127}
   - component: {fileID: 8219791648865408187}
   - component: {fileID: 1555738722157937606}
   m_Layer: 6
   m_Name: Card
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -717,6 +718,21 @@ MonoBehaviour:
   startColor: {r: 0.3372549, g: 0.8980392, b: 0.5019608, a: 0}
   highlightColor: {r: 0.3372549, g: 0.8980392, b: 0.5019608, a: 1}
   highlight: {fileID: 532133586084664971}
+--- !u!114 &3415136986594442328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028826916294217149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06031c5dd3994a14582f05afbd393c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  cardData: {fileID: 4634688475530423127}
 --- !u!114 &4634688475530423127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,6 +748,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   cardDisplay: {fileID: -7343797626388244758}
+  AttacksLeft: 1
   card: {fileID: 11400000, guid: 9577fb25e71e9d94c823d2ef626e4fdc, type: 2}
 --- !u!50 &8219791648865408187
 Rigidbody2D:

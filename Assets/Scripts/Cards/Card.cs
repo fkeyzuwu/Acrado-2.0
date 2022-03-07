@@ -16,5 +16,7 @@ public class Card : ScriptableObject
 
     public CardState state = CardState.Uninitialized;
 
+    public List<CardEffect> effects = new List<CardEffect>();
+
     //TODO: add list of effects of some sort once i work on game logic
 }

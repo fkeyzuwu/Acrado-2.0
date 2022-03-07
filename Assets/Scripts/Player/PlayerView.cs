@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
+using System;
 
 public class PlayerView : NetworkBehaviour
 {
@@ -82,6 +83,14 @@ public class PlayerView : NetworkBehaviour
             }
 
             cardObject.GetComponent<CardData>().card.state = CardState.Board;
+        }
+    }
+
+    public void AttackCard(CardData attacker, CardData defender)
+    {
+        if (IsMyTurn)
+        {
+            cardManager.CmdAttackCard(attacker, defender);
         }
     }
 
