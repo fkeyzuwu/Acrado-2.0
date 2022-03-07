@@ -25,16 +25,27 @@ public class AttackArrow : MonoBehaviour
         transform.position = transform.parent.position;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Card"))
+        if (!collision.CompareTag("Card")) return;
+
+        if (collision.GetComponent<CardData>().hasAuthority)
         {
-            target = collision.gameObject;
-            Debug.Log($"Current target - {target.GetComponent<CardData>().card.name}");
+            Debug.Log($"The card {collision.GetComponent<CardData>().card.name} is yours, you can't attack it");
+            return;
         }
+
+        if (collision.GetComponent<CardData>().state != CardState.Board)
+        {
+            Debug.Log($"The card {collision.GetComponent<CardData>().card.name} is not on the board, you can't attack it");
+            return;
+        }
+
+        target = collision.gameObject;
+        Debug.Log($"Current target - {target.GetComponent<CardData>().card.name}");
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Card"))
         {

@@ -80,7 +80,7 @@ public class CardAttack : NetworkBehaviour, IPointerDownHandler, IPointerUpHandl
         if (attackArrow.target != null)
         {
             playerView.AttackCard(cardData, attackArrow.target.GetComponent<CardData>());
-            Debug.Log($"Attacking {attackArrow.target.GetComponent<CardData>().card.name}");
+            Debug.Log($"Attacked {attackArrow.target.GetComponent<CardData>().card.name}");
         }
         else
         {

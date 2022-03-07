@@ -86,7 +86,7 @@ public class CardManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdAttackCard(CardData attacker, CardData defender)
     {
-        Debug.Log($"{attacker.card.name} attcked {defender.card.name}!");
+        Debug.Log($"{attacker.card.name} attacked {defender.card.name}!");
         attacker.AttacksLeft--;
     }
 

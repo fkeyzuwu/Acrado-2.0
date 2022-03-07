@@ -750,6 +750,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   cardDisplay: {fileID: -7343797626388244758}
+  state: 0
   AttacksLeft: 1
   card: {fileID: 11400000, guid: 9577fb25e71e9d94c823d2ef626e4fdc, type: 2}
 --- !u!50 &8219791648865408187
@@ -1706,7 +1707,7 @@ GameObject:
   - component: {fileID: 4455474143819876929}
   - component: {fileID: 7289350164776999318}
   - component: {fileID: 3927804540946460796}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: AttackArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1757,7 +1758,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -2324,7 +2325,7 @@ GameObject:
   - component: {fileID: 8631659392683438452}
   - component: {fileID: 4484030067995432903}
   - component: {fileID: 6699862189952921360}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Example Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
