@@ -61,21 +61,21 @@ public class CardManager : NetworkBehaviour
     public void CmdPlayCard(GameObject cardObject, NetworkConnectionToClient sender = null)
     {
         PlayerView player = sender.identity.GetComponent<PlayerView>();
-        Card card = cardObject.GetComponent<CardData>().card;
+        CardData card = cardObject.GetComponent<CardData>();
         player.RpcShowCard(cardObject, cardObject.name, CardState.Board);
 
         if(player.MyGameState == GameState.Player1Turn)
         {
-            if((gameManager.player1CurrentMana - card.manaCost) >= 0)
+            if((gameManager.player1CurrentMana - card.currentMana) >= 0)
             {
-                gameManager.player1CurrentMana -= card.manaCost;
+                gameManager.player1CurrentMana -= card.currentMana;
             }
         }
         else
         {
-            if((gameManager.player2CurrentMana - card.manaCost) >= 0)
+            if((gameManager.player2CurrentMana - card.currentMana) >= 0)
             {
-                gameManager.player2CurrentMana -= card.manaCost;
+                gameManager.player2CurrentMana -= card.currentMana;
             }
         }
 
